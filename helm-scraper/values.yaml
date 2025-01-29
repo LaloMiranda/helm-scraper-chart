@@ -18,4 +18,3 @@ cronjob:
 secrets: 
   notionToken: ""
   databaseId: ""
-  
