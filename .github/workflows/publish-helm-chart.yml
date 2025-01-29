@@ -1,0 +1,36 @@
+name: Publish Helm Chart
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "helm-scraper/**"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Helm
+        run: |
+          sudo apt-get update && sudo apt-get install -y helm
+
+      - name: Empaquetar el Chart de Helm
+        run: |
+          helm package helm-scraper
+
+      - name: Actualizar el índice de Helm (`index.yaml`)
+        run: |
+          helm repo index --url https://lalomiranda.github.io/helm-scraper-chart/ --merge index.yaml .
+
+      - name: Subir los cambios al repositorio
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Actualizar Helm Chart automáticamente"
+          git push
