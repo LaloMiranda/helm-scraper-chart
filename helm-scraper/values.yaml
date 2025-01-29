@@ -1,0 +1,20 @@
+global:
+  namespace: helm-scraper
+
+  image:
+    repository: lalomiranda/helm-scraper
+    tag: "0.0.4"
+
+cronjob:
+  schedule: "0 * * * *"
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "250m"
+    limits:
+      memory: "128Mi"
+      cpu: "500m"
+
+secrets:
+  notionToken: ""
+  databaseId: ""

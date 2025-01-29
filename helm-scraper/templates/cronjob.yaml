@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: {{ .Values.global.namespace }}
+spec:
+  schedule: "{{ .Values.cronjob.schedule }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: helm-scraper
+          containers:
+            - name: {{ .Chart.Name }}
+              image: "{{ .Values.global.image.repository }}:{{ .Values.global.image.tag }}"
+              command: ["python", "app.py"]
+              env:
+                - name: NOTION_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: helm-scraper-secret
+                      key: NOTION_TOKEN
+                - name: DATABASE_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: helm-scraper-secret
+                      key: DATABASE_ID
+              resources: {{ toYaml .Values.cronjob.resources | nindent 16 }}
+          restartPolicy: Never
