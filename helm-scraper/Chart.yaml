@@ -1,4 +1,5 @@
 apiVersion: v2
 name: helm-scraper
 description: Helm-scraper chart
-version: 1.0.0
+version: 1.0.1
+appVersion: 0.0.4
