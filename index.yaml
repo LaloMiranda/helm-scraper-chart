@@ -1,0 +1,12 @@
+apiVersion: v1
+entries:
+  helm-scraper:
+  - apiVersion: v2
+    created: "2025-01-29T18:14:43.164787099-03:00"
+    description: Helm-scraper chart
+    digest: c880ca3b65d8b8bacee69eaa1a8b8cab63189017ef7b8fa65408dd35c820f262
+    name: helm-scraper
+    urls:
+    - https://lalomiranda.github.io/helm-scraper-chart/helm-scraper-1.0.0.tgz
+    version: 1.0.0
+generated: "2025-01-29T18:14:43.164564393-03:00"
