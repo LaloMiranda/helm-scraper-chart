@@ -16,21 +16,35 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Configurar Helm
-        run: |
-          sudo apt-get update && sudo apt-get install -y helm
+        run: sudo apt-get update && sudo apt-get install -y helm
 
       - name: Empaquetar el Chart de Helm
-        run: |
-          helm package helm-scraper
+        run: helm package helm-scraper
 
       - name: Actualizar el índice de Helm (`index.yaml`)
-        run: |
-          helm repo index --url https://lalomiranda.github.io/helm-scraper-chart/ --merge index.yaml .
+        run: helm repo index --url https://lalomiranda.github.io/helm-scraper-chart/ --merge index.yaml .
 
-      - name: Subir los cambios al repositorio
+      - name: Generar `index.html` (si no existe)
+        run: |
+          if [ ! -f index.html ]; then
+            echo '<!DOCTYPE html>' > index.html
+            echo '<html lang="es">' >> index.html
+            echo '<head><meta charset="UTF-8"><title>Helm Charts Repository</title></head>' >> index.html
+            echo '<body><h1>🚀 Helm Charts Repository</h1>' >> index.html
+            echo '<p>Última versión publicada:</p>' >> index.html
+            VERSION=$(awk '/version:/ { print $2; exit }' index.yaml)
+            CHART_NAME=$(awk '/name:/ { print $2; exit }' index.yaml)
+            DOWNLOAD_URL=$(awk '/urls:/ { print $2; exit }' index.yaml)
+            echo "<p><strong>📦 Chart:</strong> $CHART_NAME</p>" >> index.html
+            echo "<p><strong>📌 Versión:</strong> $VERSION</p>" >> index.html
+            echo "<p><a href='$DOWNLOAD_URL'>🔗 Descargar Chart</a></p>" >> index.html
+            echo '</body></html>' >> index.html
+          fi
+
+      - name: Subir cambios (index.yaml & index.html)
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add .
-          git commit -m "Actualizar Helm Chart automáticamente"
+          git add index.yaml index.html
+          git commit -m "Actualizar Helm Chart y página web"
           git push
