@@ -8,6 +8,6 @@ entries:
     digest: 475700feeed554773d28d472874e6eea8863bda8c6cafa0cdb393d97531f14de
     name: helm-scraper
     urls:
-    - https://lalomiranda.github.io/helm-charts/helm-scraper-1.0.1.tgz
+    - https://lalomiranda.github.io/helm-scraper-chart/helm-scraper-1.0.1.tgz
     version: 1.0.1
 generated: "2025-01-29T18:24:25.408815604-03:00"
