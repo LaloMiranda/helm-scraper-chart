@@ -15,6 +15,6 @@ cronjob:
       memory: "128Mi"
       cpu: "500m"
 
-secrets:
+secrets: 
   notionToken: ""
   databaseId: ""
