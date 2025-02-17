@@ -2,7 +2,7 @@ global:
   namespace: helm-scraper
 
   image:
-    repository: helm-scraper
+    repository: lalomiranda/helm-scraper
     tag: "latest"
 
 cronjob:
